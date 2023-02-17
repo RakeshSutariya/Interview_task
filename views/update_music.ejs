@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Music App</title>
+  <link rel="shortcut icon" href="#" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            background: #00C9A7;
+        }
+        ::selection{
+            color: #fff;
+            background: #00C9A7;
+        }
+        .wrapper{
+            width: 406px;
+            padding: 40px 30px 50px 30px;
+            background: #12192c;
+            border-radius: 5px;
+            display: grid;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        .wrapper header{
+            font-size: 35px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .wrapper form{
+            margin: 40px 0;
+        }
+        form .field{
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        form .field.shake{
+            animation: shake 0.3s ease-in-out;
+        }
+        @keyframes shake {
+        0%, 100%{
+            margin-left: 0px;
+        }
+        20%, 80%{
+            margin-left: -12px;
+        }
+        40%, 60%{
+            margin-left: 12px;
+        }
+        }
+        form .field .input-area{
+          height: 50px;
+          width: 100%;
+          position: relative;
+        }
+        form input{
+          width: 100%;
+          height: 100%;
+          outline: none;
+          padding: 0 45px;
+          font-size: 18px;
+          background: none;
+          color: #e1d9ec;
+          border-radius: 5px;
+          border: 1px solid #e1d9ec;
+          border-bottom-width: 2px;
+          transition: all 0.2s ease;
+        }
+        form .field input:focus,
+        form .field.valid input{
+          border-color: #00C9A7;
+        }
+        form .field.shake input,
+        form .field.error input{
+          border-color: #dc3545;
+        }
+        .field .input-area i{
+          position: absolute;
+          top: 50%;
+          font-size: 18px;
+          pointer-events: none;
+          transform: translateY(-50%);
+        }
+        .input-area .icon{
+          left: 15px;
+          color: #bfbfbf;
+          transition: color 0.2s ease;
+        }
+        .input-area .error-icon{
+          right: 15px;
+          color: #dc3545;
+        }
+        form input:focus ~ .icon,
+        form .field.valid .icon{
+          color: #00C9A7;
+        }
+        form .field.shake input:focus ~ .icon,
+        form .field.error input:focus ~ .icon{
+          color: #bfbfbf;
+        }
+        form input::placeholder{
+          color: #bfbfbf;
+          font-size: 17px;
+        }
+        form .field .error-txt{
+          color: #dc3545;
+          text-align: left;
+          margin-top: 5px;
+        }
+        form .field .error{
+          display: none;
+        }
+        form .field.shake .error,
+        form .field.error .error{
+          display: block;
+        }
+        form .pass-txt{
+          text-align: left;
+          margin-top: -10px;
+        }
+        .wrapper a{
+          color: #00C9A7;
+          text-decoration: none;
+        }
+        .wrapper a:hover{
+          text-decoration: underline;
+        }
+        form input[type="submit"]{
+          height: 50px;
+          margin-top: 30px;
+          color: #fff;
+          padding: 0;
+          border: none;
+          background: #00C9A7;
+          cursor: pointer;
+          border-bottom: 2px solid rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+        }
+        form input[type="submit"]:hover{
+          background: #22E4AC;
+        }
+        .sign-txt{
+          color: #fff;
+        }
+        .credit{
+          margin-top: 20px;
+          text-align: center;
+          color: #000;
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        .credit a{
+          text-decoration: none;
+          color:#000;
+          font-weight: bold;
+        }  
+
+        .toast-error {
+          color: white !important;
+          font-weight: bold !important;
+          background-color: red !important;
+        }
+        .toast-success {
+          color: white !important;
+          font-weight: bold !important;
+          background-color: rgb(11, 165, 31) !important;
+        }
+
+        #headerSet{
+          padding-top: 18px !important;
+          padding-bottom: 18px !important;
+          font-size: 29px !important;
+          font-weight: bold !important;
+          color: #e1d9ec !important;
+          margin-left: 32px !important;
+          background-color: #12192c !important;
+          margin-top: 10px !important;
+          border-radius: 50px !important;
+        }
+        .logout{
+          color: #e1d9ec !important;
+          font-size: 19px !important;
+        }
+
+        /* .logout:hover {
+          background-color: #f54e00;
+        } */
+
+        input.logout{
+          float: right;
+        }
+        #userTitle{
+          color: #8d8585 !important;
+        }
+        .headetTitle {
+          padding-right: 29px !important;
+          padding-left: 26px !important;
+        }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row" id="headerSet">
+      <div class="col-sm-12 headetTitle">
+        <span id="userTitle"> Login Name : </span><span id="userName"></span>
+        <input type="button" class="btn btn-secondary shadow-sm rounded logout" value="Logout" />
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4">
+        <div class="wrapper">
+          <header>Update Song Form</header>
+          <form method="post" enctype="multipart/form-data" id="updateFormData">
+            <div class="field name">
+              <div class="input-area">
+                <input type="text" placeholder="Enter Song Name" name="songName" id="songName" required>
+                <i class="icon fas fa-list"></i>
+                <i class="error error-icon fas fa-music-circle"></i>
+              </div>
+              <div class="error error-txt">Name can't be blank</div>
+            </div>
+            <div class="field artist">
+              <div class="input-area">
+                <input type="text" placeholder="Enter Artist Name" name="artist" id="artist" required>
+                <i class="icon fas fa-user"></i>
+                <i class="error error-icon fas fa-user-circle"></i>
+              </div>
+              <div class="error error-txt">Artist can't be blank</div>
+            </div>
+            <div class="field imagesUpload">
+              <div class="input-area">
+                <input type="file" placeholder="Images Address" accept=".jpeg, .jpg, .png" id="images" name="images" style="padding-top: 8px !important;">
+                <i class="icon fas fa-image"></i>
+                <i class="error error-icon fas fa-images-circle"></i>
+              </div>
+              <div class="error error-txt">Images can't be blank</div>
+            </div>
+            <div class="field musicUpload">
+              <div class="input-area">
+                <input type="file" placeholder="Images Address" accept=".mp3" name="musics" id="musics" style="padding-top: 8px !important;">
+                <i class="icon fas fa-music"></i>
+                <i class="error error-icon fas fa-music-circle"></i>
+              </div>
+              <div class="error error-txt">Music can't be blank</div>
+            </div>
+            <input type="submit" value="Update" id="but_upload">
+          </form>
+        </div>
+      </div>
+      <div class="col-sm-4">
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script>
+
+    $(document).ready(function() {
+      if(localStorage.getItem('userId') == null || localStorage.getItem('userName') == null){
+        window.location.href = "http://localhost:3000";
+      }
+      if(localStorage.getItem('songId') == null){
+        window.location.href = "http://localhost:3000/music";
+      }
+      $('#userName').html(localStorage.getItem('userName'));
+      $.ajax({
+        "url": "http://localhost:3000/get/music",
+        "method": "POST",
+        "data" : {
+          'songId' : localStorage.getItem('songId')
+        },
+        success : function(result){
+          if(result.statusCode == 200){
+            $('#songName').val(result.data.song_name);
+            $('#artist').val(result.data.artist_name);
+          }else if(result.statusCode == 1010){
+            toastr.error('Song not found!');
+            window.location.href = 'http://localhost:3000/music';
+          }else{
+            toastr.error('Bad request');
+            window.location.href = 'http://localhost:3000/music';
+          }
+        },
+        error : function(error){
+          toastr.error('Song update failled');
+        }
+      });
+    });
+    $("#updateFormData").on('submit', function(e) {
+      e.preventDefault();
+      var formData = new FormData();
+      formData.append('songName', $('#songName').val());
+      formData.append('artist', $('#artist').val());
+      formData.append('musics', musics.files[0]);
+      formData.append('images', images.files[0]);
+      formData.append('songId', localStorage.getItem('songId'));
+      $.ajax({
+        url: "http://localhost:3000/music/update",
+        method: "PATCH",
+        data : formData,
+        cache: false,
+        contentType:false,
+        processData: false,
+        crossDomain:true, 
+        dataType: "json",
+        success : function(result){
+          if(result.statusCode == 200){
+            window.location.href = "http://localhost:3000/music";
+          }else if(result.statusCode == 1003){
+            toastr.error('Image upload maximum size of 3 MB');
+          }else if(result.statusCode == 1004){
+            toastr.error('Song upload maximum size of 10 MB');
+          }else if(result.statusCode == 1005){
+            toastr.error('Already Exist Image');
+          }else if(result.statusCode == 1006){
+            toastr.error('Image upload failled');
+          }else if(result.statusCode == 1007){
+            toastr.error('Image must be JPEG, JPG OR PNG allow only');
+          }else if(result.statusCode == 1008){
+            toastr.error('Song upload failled');
+          }else if(result.statusCode == 1009){
+            toastr.error('Music must be MP3 allowed only');
+          }else if(result.statusCode == 1011){
+            toastr.error('Song upload failled');
+          }else if(result.statusCode == 1000){
+            toastr.error('Something went wrong!');
+          }else if(result.statusCode == 1011){
+            toastr.error('Already Exist Song');
+          }else{
+            toastr.error('Bad request');
+          }
+        },
+        error : function(error){
+          toastr.error('Song update failled');
+        }
+      });
+    });
+
+    var audio = document.createElement('audio');
+    document.getElementById("musics").addEventListener('change', function(event){
+        let target = event.currentTarget;
+        let file = target.files[0];
+        let reader = new FileReader();
+        if (target.files && file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                audio.src = e.target.result;
+                audio.addEventListener('loadedmetadata', function(){
+                    let seconds = audio.duration;
+                    if(seconds < 30){
+                      toastr.error('Song time duration is minimum 30 second required!');
+                      $("#musics").val('');
+                    }
+                },false);
+            };
+            reader.readAsDataURL(file);
+        }
+    }, false); 
+
+    $('.logout').click(function(){
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('songId');
+      window.location.href = "http://localhost:3000";
+    })
+  </script>
+</body>
+</html>

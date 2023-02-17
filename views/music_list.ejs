@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Music App</title>
+  <link rel="shortcut icon" href="#" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+  <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #00C9A7;
+        }
+        ::selection{
+            color: #fff;
+            background: #00C9A7;
+        }
+        .wrapper{
+            width: 406px;
+            padding: 40px 30px 50px 30px;
+            background: #12192c;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        .wrapper header{
+            font-size: 35px;
+            font-weight: 600;
+            color: #fff;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+        #myInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+            background-color: white !important;
+        }
+
+        #myTable th, #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #myTable tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #myTable tr.header, #myTable tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #musicList{
+            display: block;
+            color: white;
+            font-weight: bold;
+            font-size: 39px;
+            text-shadow: 2px 2px #4e3737;
+        }
+
+        .dataTables_length{
+          display: none !important;
+        }
+
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+          }
+
+          .dropbtn:hover, .dropbtn:focus {
+            background-color: #2980B9;
+          }
+
+          .dropdown {
+            position: relative;
+            display: inline-block;
+          }
+
+          .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 97px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+          }
+
+          .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+          }
+
+          .dropdown a:hover {background-color: #ddd;}
+
+          .show {display: block;}
+        .toast-error {
+          color: white !important;
+          font-weight: bold !important;
+          background-color: red !important;
+        }
+        .toast-success {
+          color: white !important;
+          font-weight: bold !important;
+          background-color: rgb(11, 165, 31) !important;
+        }
+
+        .actionButton {
+          padding-top: 4px !important;
+          padding-bottom: 4px !important;
+          background-color: rebeccapurple !important;
+        }
+        #headerSet{
+          padding-top: 18px !important;
+          padding-bottom: 18px !important;
+          font-size: 29px !important;
+          font-weight: bold !important;
+          color: #e1d9ec !important;
+          margin-left: 32px !important;
+          background-color: #12192c !important;
+          margin-top: 10px !important;
+          border-radius: 50px !important;
+        }
+        .logout{
+          color: #e1d9ec !important;
+          font-size: 19px !important;
+        }
+
+        /* .logout:hover {
+          background-color: #f54e00;
+        } */
+
+        input.logout{
+          float: right;
+        }
+        #userTitle{
+          color: #8d8585 !important;
+        }
+        .headetTitle {
+          padding-right: 29px !important;
+          padding-left: 26px !important;
+        }
+  </style>
+</head>
+<body>
+    
+    <div class="container">
+      <div class="row" id="headerSet">
+        <div class="col-sm-12 headetTitle">
+          <span id="userTitle"> Login Name : </span><span id="userName"></span>
+          <input type="button" class="btn btn-secondary shadow-sm rounded logout" value="Logout" />
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div>
+          <span class="text-center" id="musicList"> Song List</span>
+          <div class="row">
+              <div class="col-md-12 float-right">
+                  <button type="button" class="btn btn-warning shadow-sm rounded addMusic">Add Music</button>
+              </div>
+          </div>
+      </div>
+      <br/>
+      <div>
+          <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap"
+          cellspacing="0" style="width:100% !important; background-color: white !important;">
+            <thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Artist</th>
+                  <th>Images</th>
+                  <th>Song Path</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
+                  <th>Action</th>
+              </tr>
+            </thead>
+          </table>
+      </div>
+    </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+  <script>
+
+        $(document).ready(function() {
+          if(localStorage.getItem('userId') == null){
+            window.location.href = "http://localhost:3000";
+          }
+
+          $('#userName').html(localStorage.getItem('userName'));
+          $('#myTable').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'POST',
+            "searching": false,
+            "ordering": false,
+            "scrollX": true,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            'ajax': {
+                'url':'http://localhost:3000/music/list',
+                data : {
+                  'id': localStorage.getItem("userId")
+                },
+            },
+            'columns': [
+              { data: 'id' },
+              { data: 'song_name' },
+              { data: 'artist_name' },
+              { data: 'images_path' },
+              { data: 'music_path' },
+              { data: 'created_at' },
+              { data: 'updated_at' },
+              { data: 'action' }
+            ]
+          });
+		    });
+
+        $('.addMusic').click( function(){
+            window.location.href = "http://localhost:3000/music/addPage";
+        });
+
+        function deleteSong(count){
+          $.ajax({
+            "url": "http://localhost:3000/music/delete",
+            "method" : 'DELETE',
+            "timeout": 0,
+            "data": {
+              "id" : $('#deleteSongs'+count).attr('data-id')
+            },
+            success : function(result){
+              if(result.statusCode == 200){
+                toastr.success('Song delete Successfully');
+                $('#myTable').DataTable().ajax.reload();
+              }else if(result.statusCode == 1010){
+                toastr.error('Song not found');
+              }else if(result.statusCode == 1000){
+                toastr.error('Something went wrong!');
+              }else{
+                toastr.error('Bad request');
+              }
+            },
+            error: function(err){
+              toastr.error('Song delete fialled');
+            }
+          });
+        }
+
+        function editSong(count){
+          window.location.href = "http://localhost:3000/music/updatePage";
+          localStorage.setItem("songId", $('#editSongs'+count).attr('data-id'));
+        }
+
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+
+        $('.logout').click(function(){
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userName');
+          localStorage.removeItem('songId');
+          window.location.href = "http://localhost:3000";
+        })
+  </script>
+</body>
+</html>
